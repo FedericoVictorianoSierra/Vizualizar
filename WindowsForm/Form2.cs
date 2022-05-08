@@ -36,7 +36,7 @@ namespace WindowsForm
             string connectionString = String.Format("server={0};port={1};user id={2}; password={3}; database={4}; SslMode={5}", server, port, user, password, database, sslM);
 
             // Seleccionar todo
-            string query = "SELECT * FROM productos"; //Parte Mostrar (obtener datos)
+            string query = "SELECT * FROM clientes"; //Parte Mostrar (obtener datos)
 
             MySqlConnection databaseConnection = new MySqlConnection(connectionString);
 
@@ -61,9 +61,9 @@ namespace WindowsForm
                     {
 
                         //                   id                    Nombre              Apellidos                Email          Usuario          Contraseña          Teléfono          Dirección          Población
-                        Console.WriteLine(reader.GetString(0) + " - " + reader.GetString(1) + " - " + reader.GetString(2) + " - " + reader.GetString(3) + " - " + reader.GetString(4) + " - " + reader.GetString(5) + " - " + reader.GetString(6) + " - " + reader.GetString(7) + " - " + reader.GetString(8));
+                        //Console.WriteLine(reader.GetString(0) + " - " + reader.GetString(1) + " - " + reader.GetString(2) + " - " + reader.GetString(3) + " - " + reader.GetString(4) + " - " + reader.GetString(5) + " - " + reader.GetString(6) + " - " + reader.GetString(7) + " - " + reader.GetString(8));
                         // Ejemplo para mostrar en el listView2 :
-                        string[] rows = { reader.GetString(0) + " - " + reader.GetString(1) + " - " + reader.GetString(2) + " - " + reader.GetString(3) + " - " + reader.GetString(4) + " - " + reader.GetString(5) + " - " + reader.GetString(6) + " - " + reader.GetString(7) + " - " + reader.GetString(8) };
+                        string[] rows = { reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3) , reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetString(8) };
                         var listViewItem = new ListViewItem(rows);
                         listView2.Items.Add(listViewItem);
                     }

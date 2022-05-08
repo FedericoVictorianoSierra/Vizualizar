@@ -92,8 +92,6 @@ namespace WindowsForm
         {
             Form2 form = new Form2();
             form.Show();
-
-
         }
     }
 }
