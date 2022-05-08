@@ -50,6 +50,10 @@ namespace WindowsForm
             this.label6 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.textID = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -228,11 +232,51 @@ namespace WindowsForm
             this.button4.Text = "Productos";
             this.button4.UseVisualStyleBackColor = false;
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(897, 59);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 16;
+            this.button5.Text = "Borrar";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // textID
+            // 
+            this.textID.Location = new System.Drawing.Point(791, 62);
+            this.textID.Name = "textID";
+            this.textID.Size = new System.Drawing.Size(100, 20);
+            this.textID.TabIndex = 17;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(788, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(78, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "id del Producto";
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(168, 421);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 19;
+            this.button6.Text = "Actualizar";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(998, 470);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textID);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label6);
@@ -260,7 +304,6 @@ namespace WindowsForm
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader idProducto;
         private System.Windows.Forms.ColumnHeader nombreProducto;
         private System.Windows.Forms.ColumnHeader descripcionProducto;
         private System.Windows.Forms.ColumnHeader precioProducto;
@@ -279,6 +322,11 @@ namespace WindowsForm
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        public System.Windows.Forms.ColumnHeader idProducto;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TextBox textID;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button6;
     }
 }
 
