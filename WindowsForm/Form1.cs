@@ -101,10 +101,10 @@ namespace WindowsForm
 
         private void SaveUser()
         {
-            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";
-            string query = "INSERT INTO productos(`idProducto`, `nombreProducto`, `descripcionProducto`, `precioProducto`, `existenciasProductos`) VALUES (NULL, '" + textBox1.Text + "', '" + textBox2.Text + "', '" + textBox3.Text + "', '" + textBox4.Text + "')";
+            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";                             // VALUES (NULL, '" + textBox1.Text +
+            string query = "INSERT INTO productos(`idProducto`, `nombreProducto`, `descripcionProducto`, `precioProducto`, `existenciasProductos`) VALUES ('" + textBox1.Text + "', '" + textBox2.Text + "', '" + textBox3.Text + "', '" + textBox4.Text + "', '" + textBox5.Text + "')";
             // Que puede ser traducido con un valor a:
-            // INSERT INTO user(`id`, `first_name`, `last_name`, `address`) VALUES (NULL, 'Bruce', 'Wayne', 'Wayne Manor')
+            //INSERT INTO `productos` (`idProducto`, `nombreProducto`, `descripcionProducto`, `precioProducto`, `existenciasProductos`) VALUES ('3456', 'ghfghfgh', 'fghghf', '12', '12');
 
             MySqlConnection databaseConnection = new MySqlConnection(connectionString);
             MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
