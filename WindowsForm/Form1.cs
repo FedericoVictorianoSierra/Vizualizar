@@ -15,20 +15,20 @@ namespace WindowsForm
     {
         void connect()
         {
-            string server = "localhost";
-            string database = "base_de_datos";
-            string user = "root";
-            string password = "";
-            string port = "3306";
+            string server = "localhost"; //Nombre del Servidor
+            string database = "base_de_datos"; //Nombre de la base de datos SQL
+            string user = "root"; //Nombre de usuario 
+            string password = ""; //Contraseña de Usuario
+            string port = "3306"; // Puerto de MySQL
             string sslM = "none";
 
             //string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";
             string connectionString = String.Format("server={0};port={1};user id={2}; password={3}; database={4}; SslMode={5}", server, port, user, password, database, sslM);
 
-            // Seleccionar todo
-            string query = "SELECT * FROM productos"; //Parte Mostrar (obtener datos)
-
             MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+
+            // Seleccionar todo de la tabla productos
+            string query = "SELECT * FROM productos"; //Parte Mostrar (obtener datos)
 
             MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection); //Parte Mostrar (obtener datos)
             commandDatabase.CommandTimeout = 60; //Parte Mostrar (obtener datos)
