@@ -93,5 +93,37 @@ namespace WindowsForm
             Form2 form = new Form2();
             form.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SaveUser();
+        }
+
+        private void SaveUser()
+        {
+            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";
+            string query = "INSERT INTO productos(`idProducto`, `nombreProducto`, `descripcionProducto`, `precioProducto`, `existenciasProductos`) VALUES (NULL, '" + textBox1.Text + "', '" + textBox2.Text + "', '" + textBox3.Text + "', '" + textBox4.Text + "')";
+            // Que puede ser traducido con un valor a:
+            // INSERT INTO user(`id`, `first_name`, `last_name`, `address`) VALUES (NULL, 'Bruce', 'Wayne', 'Wayne Manor')
+
+            MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+            MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
+            commandDatabase.CommandTimeout = 60;
+
+            try
+            {
+                databaseConnection.Open();
+                MySqlDataReader myReader = commandDatabase.ExecuteReader();
+
+                MessageBox.Show("Producto insertado satisfactoriamente");
+
+                databaseConnection.Close();
+            }
+            catch (Exception ex)
+            {
+                // Mostrar cualquier error
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
