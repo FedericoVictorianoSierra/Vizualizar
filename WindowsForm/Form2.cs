@@ -26,7 +26,7 @@ namespace WindowsForm
         private void SaveUser()
         {
             string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";                             // VALUES (NULL, '" + textBox1.Text +
-            string query = "INSERT INTO productos(`id`, `Nombre`, `Apellidos`, `email`, `usuario`,`contraseña`, `telefono`, `direccioncalle`, `poblacion`) VALUES ('" + txtID.Text + "', '" + txtNombre.Text + "', '" + txtApellidos.Text + "', '" + txtemail.Text + "', '" + txtUsuario.Text + "', '" + txtContraseña.Text + "', '" + txtTelefono + "', '" + txtDireccion.Text + "', '" + txtPoblacion.Text + "')";
+            string query = "INSERT INTO productos(`id`, `Nombre`, `Apellidos`, `E-mail`, `Usuario`,`Contraseña`, `Teléfono`, `Dirección_Calle`, `Población`) VALUES ('" + txtID.Text + "', '" + txtNombre.Text + "', '" + txtApellidos.Text + "', '" + txtemail.Text + "', '" + txtUsuario.Text + "', '" + txtContraseña.Text + "', '" + txtTelefono + "', '" + txtDireccion.Text + "', '" + txtPoblacion.Text + "')";
             // Que puede ser traducido con un valor a:
             //INSERT INTO `productos` (`idProducto`, `nombreProducto`, `descripcionProducto`, `precioProducto`, `existenciasProductos`) VALUES ('3456', 'ghfghfgh', 'fghghf', '12', '12');
 
@@ -52,9 +52,9 @@ namespace WindowsForm
 
         public void UpdateUser()
         {
-            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=user;";
+            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";
             // Actualizar la fila user con ID 1
-            string query = "UPDATE  productos`user` SET (`id`, `Nombre`, `Apellidos`, `email`, `usuario`,`contraseña`, `telefono`, `direccioncalle`, `poblacion`) VALUES ('" + txtID.Text + "', '" + txtNombre.Text + "', '" + txtApellidos.Text + "', '" + txtemail.Text + "', '" + txtUsuario.Text + "', '" + txtContraseña.Text + "', '" + txtTelefono + "', '" + txtDireccion.Text + "', '" + txtPoblacion.Text + "')";
+            string query = "UPDATE  productos`user` SET (`id`, `Nombre`, `Apellidos`, `E-mail`, `Usuario`,`Contraseña`, `Teléfono`, `Dirección_Calle`, `Población`) VALUES ('" + txtID.Text + "', '" + txtNombre.Text + "', '" + txtApellidos.Text + "', '" + txtemail.Text + "', '" + txtUsuario.Text + "', '" + txtContraseña.Text + "', '" + txtTelefono + "', '" + txtDireccion.Text + "', '" + txtPoblacion.Text + "')";
 
             MySqlConnection databaseConnection = new MySqlConnection(connectionString);
             MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
@@ -79,7 +79,7 @@ namespace WindowsForm
 
         public void DeleteUser()
         {
-            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=user;";
+            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";
             // Borrar la fila con ID #?
 
             int ID = Convert.ToInt32(txtID.Text);
