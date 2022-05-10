@@ -18,7 +18,7 @@ namespace WindowsForm
         public MySqlDataReader reader;
 
         public string server = "localhost"; //Nombre del Servidor
-        public string database = "base_de_datos"; //Nombre de la base de datos SQL
+        public string database = "basededatos"; //Nombre de la base de datos SQL
         public string user = "root"; //Nombre de usuario 
         public string password = ""; //Contraseña de Usuario
         public string port = "3306"; // Puerto de MySQL
@@ -26,13 +26,21 @@ namespace WindowsForm
 
         void connect()
         {
-            //string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";
+            //string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=basededatos;";
             string connectionString = String.Format("server={0};port={1};user id={2}; password={3}; database={4}; SslMode={5}", server, port, user, password, database, sslM);
 
             databaseConnection = new MySqlConnection(connectionString);
 
             try{
-                databaseConnection.Open();
+                if (databaseConnection.State != ConnectionState.Open)
+                {
+                    databaseConnection.Open();
+                    
+                }
+                else
+                {
+                    databaseConnection.Close();
+                }
                 Console.WriteLine("Conexion exitosa");
             }catch (MySqlException e){
                 Console.WriteLine(e.Message + connectionString);
@@ -50,21 +58,28 @@ namespace WindowsForm
             string query = "SELECT * FROM productos";
             commandDatabase = new MySqlCommand(query, databaseConnection);
             commandDatabase.CommandTimeout = 60;
-            reader = commandDatabase.ExecuteReader();
-            // Si se encontraron datos
-            if (reader.HasRows){
-                listView1.Items.Clear();
-                while (reader.Read()){
-                    //                   idProducto                    nombreProducto              descripcionProducto                precioProducto          existenciasProductos
-                    //Console.WriteLine(reader.GetString(0) + " - " + reader.GetString(1) + " - " + reader.GetString(2) + " - " + reader.GetString(3) + " - " + reader.GetString(4));
-                    // Ejemplo para mostrar en el listView1 :
-                    string[] row = { reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4) };
-                    var listViewItem = new ListViewItem(row);
-                    listView1.Items.Add(listViewItem);
+            try
+            {
+                reader = commandDatabase.ExecuteReader();
+                // Si se encontraron datos
+                if (reader.HasRows) {
+                    listView1.Items.Clear();
+                    while (reader.Read()) {
+                        //                   idProducto                    nombreProducto              descripcionProducto                precioProducto          existenciasProductos
+                        //Console.WriteLine(reader.GetString(0) + " - " + reader.GetString(1) + " - " + reader.GetString(2) + " - " + reader.GetString(3) + " - " + reader.GetString(4));
+                        // Ejemplo para mostrar en el listView1 :
+                        string[] row = { reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4) };
+                        var listViewItem = new ListViewItem(row);
+                        listView1.Items.Add(listViewItem);
+                    }
+                } else {
+                    Console.WriteLine("No se encontro nada");
                 }
-            }else{
-                Console.WriteLine("No se encontro nada");
+            }catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
             }
+
         }
 
         public Form1()

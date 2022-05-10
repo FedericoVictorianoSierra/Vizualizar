@@ -22,24 +22,59 @@ namespace WindowsForm
         {
 
         }
+        public MySqlCommand commandDatabase;
+        public MySqlConnection databaseConnection;
+        public MySqlDataReader reader;
+
+        public string server = "localhost";
+        public string database = "basededatos";
+        public string user = "root";
+        public string password = "";
+        public string port = "3306";
+        public string sslM = "none";
+
+        void connect()
+        {
+            //string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=basededatos;";
+            string connectionString = String.Format("server={0};port={1};user id={2}; password={3}; database={4}; SslMode={5}", server, port, user, password, database, sslM);
+
+            databaseConnection = new MySqlConnection(connectionString);
+
+            try
+            {
+                
+                if (databaseConnection.State != ConnectionState.Open)
+                {
+                    databaseConnection.Open();
+                    Console.WriteLine("Conexion exitosa");
+                }
+                else
+                {
+                    databaseConnection.Close();
+                }
+            
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message + connectionString);
+            }
+        }
 
         private void SaveUser()
         {
-            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";                             // VALUES (NULL, '" + textBox1.Text +
-            string query = "INSERT INTO productos(`id`, `Nombre`, `Apellidos`, `E-mail`, `Usuario`,`Contraseña`, `Teléfono`, `Dirección_Calle`, `Población`) VALUES ('" + txtID.Text + "', '" + txtNombre.Text + "', '" + txtApellidos.Text + "', '" + txtemail.Text + "', '" + txtUsuario.Text + "', '" + txtContraseña.Text + "', '" + txtTelefono + "', '" + txtDireccion.Text + "', '" + txtPoblacion.Text + "')";
+                                        
+            string query = "INSERT INTO clientes(`id`, `Nombre`, `Apellidos`, `E-mail`, `Usuario`,`Contraseña`, `Teléfono`, `Dirección_Calle`, `Población`) VALUES ('" + txtID.Text + "', '" + txtNombre.Text + "', '" + txtApellidos.Text + "', '" + txtemail.Text + "', '" + txtUsuario.Text + "', '" + txtContraseña.Text + "', '" + txtTelefono.Text + "', '" + txtDireccion.Text + "', '" + txtPoblacion.Text + "')";
             // Que puede ser traducido con un valor a:
-            //INSERT INTO `productos` (`idProducto`, `nombreProducto`, `descripcionProducto`, `precioProducto`, `existenciasProductos`) VALUES ('3456', 'ghfghfgh', 'fghghf', '12', '12');
-
-            MySqlConnection databaseConnection = new MySqlConnection(connectionString);
-            MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
+            //INSERT INTO `clientes` (`id`, `Nombre`, `Apellidos`, `E-mail`, `Usuario`,`Contraseña`, `Teléfono`, `Dirección_Calle`, `Población`) VALUES ('" + txtID.Text + "', '" + txtNombre.Text + "', '" + txtApellidos.Text + "', '" + txtemail.Text + "', '" + txtUsuario.Text + "', '" + txtContraseña.Text + "', '" + txtTelefono + "', '" + txtDireccion.Text + "', '" + txtPoblacion.Text + "')
+            commandDatabase = new MySqlCommand(query, databaseConnection);
             commandDatabase.CommandTimeout = 60;
 
             try
             {
-                databaseConnection.Open();
-                MySqlDataReader myReader = commandDatabase.ExecuteReader();
+                
+                reader = commandDatabase.ExecuteReader();
 
-                MessageBox.Show("Producto insertado satisfactoriamente");
+                MessageBox.Show("Usuario insertado satisfactoriamente");
 
                 databaseConnection.Close();
             }
@@ -52,21 +87,18 @@ namespace WindowsForm
 
         public void UpdateUser()
         {
-            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";
             // Actualizar la fila user con ID 1
-            string query = "UPDATE  productos`user` SET (`id`, `Nombre`, `Apellidos`, `E-mail`, `Usuario`,`Contraseña`, `Teléfono`, `Dirección_Calle`, `Población`) VALUES ('" + txtID.Text + "', '" + txtNombre.Text + "', '" + txtApellidos.Text + "', '" + txtemail.Text + "', '" + txtUsuario.Text + "', '" + txtContraseña.Text + "', '" + txtTelefono + "', '" + txtDireccion.Text + "', '" + txtPoblacion.Text + "')";
-
-            MySqlConnection databaseConnection = new MySqlConnection(connectionString);
-            MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
+            string query = "UPDATE `clientes` SET `id` = '" + txtID.Text + "', `Nombre` ='" + txtNombre.Text + "', `Apellidos` ='" + txtApellidos.Text + "', `E-mail` ='" + txtemail.Text + "', `Usuario` ='" + txtUsuario.Text + "', `Contraseña` ='" + txtContraseña.Text + "', `Teléfono` ='" + txtTelefono.Text + "', `Dirección_Calle` ='" + txtDireccion.Text + "', `Población` ='" + txtPoblacion.Text + "' WHERE `clientes`.`id` =" + txtID.Text;
+            
+            commandDatabase = new MySqlCommand(query, databaseConnection);
             commandDatabase.CommandTimeout = 60;
-            MySqlDataReader reader;
 
             try
             {
-                databaseConnection.Open();
                 reader = commandDatabase.ExecuteReader();
 
                 // Actualizado satisfactoriamente
+                MessageBox.Show("Información del Usuario actualizada satisfactoriamente");
 
                 databaseConnection.Close();
             }
@@ -79,25 +111,21 @@ namespace WindowsForm
 
         public void DeleteUser()
         {
-            string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";
             // Borrar la fila con ID #?
 
             int ID = Convert.ToInt32(txtID.Text);
 
-            string query = "DELETE FROM `user` WHERE id = " + ID;
+            string query = "DELETE FROM clientes WHERE `clientes`.`id` = " + ID;
 
-            MySqlConnection databaseConnection = new MySqlConnection(connectionString);
-            MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
+            commandDatabase = new MySqlCommand(query, databaseConnection);
             commandDatabase.CommandTimeout = 60;
-            MySqlDataReader reader;
 
             try
             {
-                databaseConnection.Open();
                 reader = commandDatabase.ExecuteReader();
 
                 // Eliminado satisfactoriamente
-
+                MessageBox.Show("Usuario "+ID+" eliminado satisfactoriamente");
                 databaseConnection.Close();
             }
             catch (Exception ex)
@@ -107,64 +135,47 @@ namespace WindowsForm
             }
         }
 
-        void connect()
+        public void VisualizarDatos()
         {
-            string server = "localhost";
-            string database = "base_de_datos";
-            string user = "root";
-            string password = "";
-            string port = "3306";
-            string sslM = "none";
-
-            //string connectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=base_de_datos;";
-            string connectionString = String.Format("server={0};port={1};user id={2}; password={3}; database={4}; SslMode={5}", server, port, user, password, database, sslM);
-
             // Seleccionar todo
-            string query = "SELECT * FROM clientes"; //Parte Mostrar (obtener datos)
+            string query = "SELECT * FROM clientes";
 
-            MySqlConnection databaseConnection = new MySqlConnection(connectionString);
-
-            MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection); //Parte Mostrar (obtener datos)
-            commandDatabase.CommandTimeout = 60; //Parte Mostrar (obtener datos)
-            MySqlDataReader reader; //Parte Mostrar (obtener datos)
+            commandDatabase = new MySqlCommand(query, databaseConnection);
+            commandDatabase.CommandTimeout = 60;
+            
 
             try
             {
-                databaseConnection.Open();
-
-                Console.WriteLine("Conexion exitosa");
-
-                //------------------------------------------Parte Mostrar (obtener datos)
                 reader = commandDatabase.ExecuteReader();
 
 
                 // Si se encontraron datos
                 if (reader.HasRows)
                 {
+                    listView2.Items.Clear();
                     while (reader.Read())
                     {
-
-                        //                   id                    Nombre              Apellidos                Email          Usuario          Contraseña          Teléfono          Dirección          Población
-                        //Console.WriteLine(reader.GetString(0) + " - " + reader.GetString(1) + " - " + reader.GetString(2) + " - " + reader.GetString(3) + " - " + reader.GetString(4) + " - " + reader.GetString(5) + " - " + reader.GetString(6) + " - " + reader.GetString(7) + " - " + reader.GetString(8));
-                        // Ejemplo para mostrar en el listView2 :
-                        string[] rows = { reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3) , reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetString(8) };
-                        var listViewItem = new ListViewItem(rows);
-                        listView2.Items.Add(listViewItem);
+                        //
+                        //reader.Read();
+                        //                   ID                   Nombre                   Apellidos                   E-mail                   Usuario                   Contraseña                   Teléfono                   Dirección                   Población
+                        //Console.WriteLine(reader.GetString(0) + " - " + reader.GetString(1) + " - " + reader.GetString(2) + " - " + reader.GetString(3));
+                        // Ejemplo para mostrar en el listView1 :
+                        string[] row = { reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetString(8) };
+                        var lista = new ListViewItem(row);
+                        listView2.Items.Add(lista);
                     }
                 }
                 else
                 {
                     Console.WriteLine("No se encontro nada");
                 }
-                //------------------------------------------Parte Mostrar (obtener datos)
 
                 databaseConnection.Close();
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message + connectionString);
+                MessageBox.Show(ex.Message);
             }
-
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -175,6 +186,7 @@ namespace WindowsForm
         private void button1_Click(object sender, EventArgs e)
         {
             connect();
+            VisualizarDatos();
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -199,17 +211,30 @@ namespace WindowsForm
 
         private void buttonInsertar_Click(object sender, EventArgs e)
         {
+            connect();
             SaveUser();
+
+            connect();
+            VisualizarDatos();
+            
         }
 
         private void buttonActualizar_Click(object sender, EventArgs e)
         {
+            connect();
             UpdateUser();
+
+            connect();
+            VisualizarDatos();
         }
 
         private void buttonBorrar_Click(object sender, EventArgs e)
         {
+            connect();
             DeleteUser();
+
+            connect();
+            VisualizarDatos();
         }
     }
 }
